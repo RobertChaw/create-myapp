@@ -1,0 +1,45 @@
+{
+  "name": "create-myapp",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Robert Chaw",
+  "homepage": "https://github.com/RobertChaw/create-myapp",
+  "type": "module",
+  "bin": {
+    "create-myapp": "index.js"
+  },
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
+  },
+  "files": [
+    "/src/*",
+    "/templates",
+    "/index.js"
+  ],
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.3",
+    "@types/minimist": "^1.2.4",
+    "@types/prompts": "^2.4.7",
+    "cross-spawn": "^7.0.3",
+    "fs-extra": "^11.1.1",
+    "husky": "^8.0.3",
+    "kolorist": "^1.8.0",
+    "lint-staged": "^15.0.2",
+    "minimist": "^1.2.8",
+    "prettier": "^3.0.3",
+    "prompts": "^2.4.2",
+    "typescript": "^5.2.2",
+    "unbuild": "^2.0.0"
+  },
+  "keywords": [],
+  "license": "ISC"
+}
