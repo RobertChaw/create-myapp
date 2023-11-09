@@ -1,6 +1,6 @@
 {
   "name": "@robertchaw/create-myapp",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "author": "Robert Chaw",
   "homepage": "https://github.com/RobertChaw/create-myapp",
@@ -23,7 +23,8 @@
   "files": [
     "/src/*",
     "/templates",
-    "/index.js"
+    "/index.js",
+    "dist"
   ],
   "devDependencies": {
     "@types/fs-extra": "^11.0.3",
