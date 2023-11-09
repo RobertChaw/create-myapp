@@ -22,3 +22,5 @@ sketch
 *.iml
 out
 gen
+
+dist
