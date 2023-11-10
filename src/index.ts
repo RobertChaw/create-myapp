@@ -1,5 +1,5 @@
 import prompts from "prompts";
-import minimist from "minimist";
+// import minimist from "minimist";
 import { reset, cyan, green, lightBlue, red } from "kolorist";
 import path from "path";
 import fs from "fs-extra";
