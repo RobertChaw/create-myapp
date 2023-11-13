@@ -4,6 +4,7 @@ import { reset, cyan, green, lightBlue, red } from "kolorist";
 import path from "path";
 import fs from "fs-extra";
 import * as process from "process";
+import { fileURLToPath } from "node:url";
 
 type ColorFn = (text: string | number) => string;
 
@@ -128,17 +129,18 @@ async function init() {
           }));
         },
         onState: ({ value }) => {
-          templatePath = path.join(__dirname, "../templates", value);
-          console.log(`templatePath`, templatePath);
+          const dirUrl = new URL("../", import.meta.url);
+          const dirname = fileURLToPath(dirUrl);
+          templatePath = path.join(dirname, "/templates", value);
         },
       },
     ]);
 
     copyFiles(templatePath, exportingPath);
 
-    console.log("部署完成");
-    console.log(`${exportingPath}`)
-    console.log("运行以下命令:")
+    console.log("部署完成:");
+    console.log(`${exportingPath}`);
+    console.log("运行以下命令:");
     console.log("pnpm install");
     console.log("pnpm run dev");
   } catch (e) {
