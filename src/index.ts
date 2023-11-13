@@ -48,7 +48,7 @@ const FRAMEWORKS: Framework[] = [
     color: green,
     variants: [
       {
-        name: "basic",
+        name: "vue",
         display: "Vue",
         description: "contains: Vite Tailwind Prettier",
         color: green,
