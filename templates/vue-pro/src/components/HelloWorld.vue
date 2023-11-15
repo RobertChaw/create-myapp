@@ -1,7 +1,15 @@
 <script setup lang="ts">
+import { useCounterStore } from "@/stores/counter";
+import { storeToRefs } from "pinia";
+
 defineProps<{
-  msg: string
-}>()
+  msg: string;
+}>();
+
+const store = useCounterStore();
+const { count } = storeToRefs(store);
+
+
 </script>
 
 <template>
@@ -10,8 +18,12 @@ defineProps<{
     <h3>
       You’ve successfully created a project with
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>. What's next?
+      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
+      What's next?
     </h3>
+    <button class="mx-auto w-[150px]" @click="count++">
+      count is {{ count }}
+    </button>
   </div>
 </template>
 
