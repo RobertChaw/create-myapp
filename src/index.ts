@@ -5,6 +5,7 @@ import path from "path";
 import fs from "fs-extra";
 import * as process from "process";
 import { fileURLToPath } from "node:url";
+import spwan from "cross-spawn";
 
 type ColorFn = (text: string | number) => string;
 
@@ -137,6 +138,10 @@ async function init() {
     ]);
 
     copyFiles(templatePath, exportingPath);
+    const initializingGit = spwan.sync("git init", {
+      cwd:exportingPath,
+      stdio: "inherit",
+    });
 
     console.log("部署完成:");
     console.log(`${exportingPath}`);

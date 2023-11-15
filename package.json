@@ -1,6 +1,6 @@
 {
   "name": "@robertchaw/create-myapp",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "",
   "author": "Robert Chaw",
   "homepage": "https://github.com/RobertChaw/create-myapp",
@@ -27,6 +27,7 @@
     "dist"
   ],
   "devDependencies": {
+    "@types/cross-spawn": "^6.0.5",
     "@types/fs-extra": "^11.0.3",
     "@types/minimist": "^1.2.4",
     "@types/prompts": "^2.4.7",
