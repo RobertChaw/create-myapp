@@ -5,7 +5,7 @@
 --- 
 
 > [!IMPORTANT]
->  [Node.js](https://nodejs.org/en/) 版本 18+, 20+.
+>  [Node.js](https://nodejs.org/en/) 版本支持: 18+, 20+.
 >
 
 使用 NPM:
