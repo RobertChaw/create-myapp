@@ -1,5 +1,5 @@
 import prompts from "prompts";
-// import minimist from "minimist";
+import minimist from "minimist";
 import { reset, cyan, green, lightBlue, red } from "kolorist";
 import path from "path";
 import fs from "fs-extra";
@@ -71,26 +71,44 @@ function copyFiles(src: string, dest: string) {
   fs.copySync(src, dest);
 }
 
+function getExportPath(dir: string) {
+  return path.join(process.cwd(), dir);
+}
+
+function getTemplatePath(dir: string) {
+  const dirUrl = new URL("../", import.meta.url);
+  const dirname = fileURLToPath(dirUrl);
+  return path.join(dirname, "/templates", dir);
+}
+
 async function init() {
+  let argv = minimist<{ template?: string }>(process.argv.slice(2), {
+    string: ["_"],
+  });
+
   let res = null;
-  let templatePath = "";
-  let exportingPath = "";
-  let isExistence = false;
+  let template = argv.template;
+  let destDir = argv._[0];
   let override = false;
+
   try {
     res = await prompts([
       {
-        type: "text",
-        name: "path",
+        type: () => {
+          if (destDir) return;
+          return "text";
+        },
+        name: "destDir",
         message: "项目路径",
         initial: ".",
         onState: ({ value }) => {
-          exportingPath = path.join(process.cwd(), value);
-          isExistence = fs.existsSync(exportingPath);
+          destDir = value;
         },
       },
       {
         type: () => {
+          const exportPath = getExportPath(destDir);
+          const isExistence = fs.existsSync(exportPath);
           if (isExistence) return "confirm";
           return null;
         },
@@ -102,6 +120,8 @@ async function init() {
       },
       {
         type: () => {
+          const exportPath = getExportPath(destDir);
+          const isExistence = fs.existsSync(exportPath);
           if (isExistence && !override)
             throw new Error(`${red("✖")} 操作取消`);
           return null;
@@ -109,7 +129,10 @@ async function init() {
         name: "overrideChecker",
       },
       {
-        type: "select",
+        type: () => {
+          if (template) return;
+          return "select";
+        },
         name: "framework",
         message: "选择一个框架",
         choices: FRAMEWORKS.map((framework) => ({
@@ -119,7 +142,10 @@ async function init() {
         })),
       },
       {
-        type: "select",
+        type: () => {
+          if (template) return;
+          return "select";
+        },
         name: "variant",
         message: "选择一个 variant",
         choices: (framework: Framework) => {
@@ -130,21 +156,21 @@ async function init() {
           }));
         },
         onState: ({ value }) => {
-          const dirUrl = new URL("../", import.meta.url);
-          const dirname = fileURLToPath(dirUrl);
-          templatePath = path.join(dirname, "/templates", value);
+          template = value;
         },
       },
     ]);
+    const exportPath = getExportPath(destDir);
+    const templatePath = getTemplatePath(template as string);
+    copyFiles(templatePath, exportPath);
 
-    copyFiles(templatePath, exportingPath);
     const initializingGit = spwan.sync("git init", {
-      cwd:exportingPath,
+      cwd: exportPath,
       stdio: "inherit",
     });
 
     console.log("部署完成:");
-    console.log(`${exportingPath}`);
+    console.log(`${exportPath}`);
     console.log("运行以下命令:");
     console.log("pnpm install");
     console.log("pnpm run dev");
