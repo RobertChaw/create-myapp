@@ -21,7 +21,7 @@ pnpm create @robertchaw/myapp
 你也可以通过命令行直接生成参数:
 ```bash
 # npm
-npm create @robertchaw/myapp -- --template=react
+npm create @robertchaw/myapp -- --template react
 
 #pnpm
 pnpm create @robertchaw/myapp --template react
